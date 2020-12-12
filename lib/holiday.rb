@@ -25,34 +25,41 @@ def all_winter_holiday_supplies(holiday_hash)
 end
 
 def all_supplies_in_holidays(holiday_hash)
+  holiday_hash.each do |season, holiday|
+    # iterate over seasons, turn them into strings
+    s = season.to_s 
+    puts s.capitalize + ":"
 
-holiday_hash.each do |season, holiday|
-  # season is :winter, holiday is :new_years
-  # this code seems fine
-  s = season.to_s 
-  puts s.capitalize + ":"
+    holiday_cap = " "
+    sup = " "
 
-  holiday_hash[season].each do |holidays, supplies|
-    # holiday is :new_years, supplies are Party Hats
-     holiday = holidays.to_s
-     
-
-    sup = supplies.join(", ")
-    puts sup
+    holiday_hash[season].each do |holidays, supplies|
+      #iterate over holidays and supplies
+      holiday = holidays.to_s.split("_")
+      # turn symbol into a string
+      # turn the string into an array
+      holiday.map do |word|
+        # iterate each word in array
+        word.capitalize!
+        end
+      holiday_cap = holiday.join(" ")
+      # turn array back into string
+      supply = supplies.join(", ")
+      puts "  " + holiday_cap + ": " + supply
     end
   end
 end
 
-def all_holidays_with_bbq(holiday_hash)
 
+def all_holidays_with_bbq(holiday_hash)
   return_array = []
   holiday_hash.each do |season, holidays|
-    # season is winter, holidays are christmas & NY
-    holidays.each do |supplies|
-      # supplies are Lights and BBQ
-      if supplies == "BBQ"
-        # put the holiday into an array
-        return_array.push(holidays)
+    # season is :winter (key), holiday is {hash} christmas
+    holidays.each do |holiday, supplies|
+      supplies.each do |supply|
+        if supply == "BBQ"
+          return_array << holiday
+        end
       end
     end
   end
